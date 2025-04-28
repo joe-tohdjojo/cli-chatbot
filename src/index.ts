@@ -1,17 +1,19 @@
-import readlineSync from "readline-sync";
-import ora from "ora";
 import chalk from "chalk";
+import ora from "ora";
+import readlineSync from "readline-sync";
 
-import { openai } from "./lib/openai";
 import { AI_MODEL } from "./constants";
+import { openai } from "./lib";
+import { tools } from "./agent-tools";
 
 async function submitPrompt(prompt: string) {
   const spinner = ora("Thinking...").start();
 
   const stream = await openai.responses.create({
-    model: AI_MODEL,
     input: [{ role: "user", content: prompt }],
+    model: AI_MODEL,
     stream: true,
+    tools,
   });
 
   spinner.stop();

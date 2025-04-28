@@ -3,13 +3,13 @@ import ora from "ora";
 import chalk from "chalk";
 
 import { openai } from "./lib/openai";
-import { MODEL } from "./constants";
+import { AI_MODEL } from "./constants";
 
 async function submitPrompt(prompt: string) {
   const spinner = ora("Thinking...").start();
 
   const stream = await openai.responses.create({
-    model: MODEL,
+    model: AI_MODEL,
     input: [{ role: "user", content: prompt }],
     stream: true,
   });
